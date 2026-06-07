@@ -36,21 +36,21 @@ export default async function PalletDetailPage({ params }: { params: { id: strin
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <Link href="/dashboard" className="text-blue-600 hover:underline text-sm font-medium mb-1 inline-block">
-            ← Torna alla Dashboard
+          <Link href="/dashboard" className="text-gray-400 hover:text-blue-600 text-sm font-medium mb-2 inline-flex items-center gap-1 transition-colors">
+            ← Dashboard
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">{pallet.name}</h1>
-          <p className="text-sm text-gray-500">
-            Creato il: {new Date(pallet.createdAt).toLocaleString('it-IT')}
+          <h1 className="text-2xl font-extrabold text-gray-900">{pallet.name}</h1>
+          <p className="text-xs text-gray-400 mt-1">
+            📅 Creato il {new Date(pallet.createdAt).toLocaleString('it-IT')}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-            pallet.status === 'OPEN' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+          <span className={`px-3 py-1.5 rounded-lg text-sm font-bold ${
+            pallet.status === 'OPEN' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
           }`}>
-            {pallet.status}
+            {pallet.status === 'OPEN' ? '● Aperto' : '✓ Chiuso'}
           </span>
           {pallet.status === 'OPEN' && (
             <ClosePalletModal palletId={pallet.id} palletName={pallet.name} />

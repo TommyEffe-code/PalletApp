@@ -22,40 +22,41 @@ export default function NewPalletPage() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Nuovo Bancale</h1>
-        <Link href="/dashboard" className="text-blue-600 hover:underline font-medium">
-          Indietro
+      <div className="flex items-center gap-3 mb-8">
+        <Link href="/dashboard" className="text-gray-400 hover:text-blue-600 transition-colors">
+          ← Indietro
         </Link>
+        <span className="text-gray-300">/</span>
+        <h1 className="text-2xl font-extrabold text-gray-900">Nuovo Bancale</h1>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
           {error && (
-            <div className="p-3 bg-red-100 text-red-700 rounded-md">
-              {error}
+            <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm flex items-center gap-2">
+              <span>⚠️</span> {error}
             </div>
           )}
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="name" className="text-gray-700 font-medium">
+          <div className="flex flex-col space-y-1.5">
+            <label htmlFor="name" className="text-gray-700 font-semibold text-sm uppercase tracking-wide">
               Nome Bancale
             </label>
-            <input 
-              type="text" 
-              name="name" 
-              id="name" 
+            <input
+              type="text"
+              name="name"
+              id="name"
               required
               placeholder="es. Frigo Carni 1, Scaffale A..."
-              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900" 
+              className="p-3 border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white text-gray-900 transition-all"
             />
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isPending}
-            className="mt-4 p-3 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="mt-2 p-3.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 transition-all shadow-md hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
           >
-            {isPending ? 'Creazione in corso...' : 'Crea e Vai allo Scanner'}
+            {isPending ? '⏳ Creazione in corso...' : '📦 Crea e Vai allo Scanner'}
           </button>
         </form>
       </div>
