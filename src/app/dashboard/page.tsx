@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/actions/auth'
 import Link from 'next/link'
-import { PlusIcon } from '@heroicons/react/24/solid' // Need to install heroicons
+import { PlusIcon } from '@heroicons/react/24/solid'
+import DeletePalletButton from '@/components/DeletePalletButton'
 
 export default async function DashboardPage() {
   const session = await getSession()
@@ -61,11 +62,14 @@ export default async function DashboardPage() {
                   <div className="p-5 flex flex-col flex-1">
                     <div className="flex justify-between items-start mb-3">
                       <h2 className="text-lg font-bold text-gray-900 leading-tight">{pallet.name}</h2>
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ml-2 shrink-0 ${
-                        pallet.status === 'OPEN' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
-                      }`}>
-                        {pallet.status === 'OPEN' ? '● Aperto' : '✓ Chiuso'}
-                      </span>
+                      <div className="flex items-center gap-1 ml-2 shrink-0">
+                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                          pallet.status === 'OPEN' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {pallet.status === 'OPEN' ? '● Aperto' : '✓ Chiuso'}
+                        </span>
+                        <DeletePalletButton palletId={pallet.id} palletName={pallet.name} />
+                      </div>
                     </div>
                     <p className="text-xs text-gray-400 mb-4">
                       📅 {new Date(pallet.createdAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })}

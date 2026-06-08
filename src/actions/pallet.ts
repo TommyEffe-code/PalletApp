@@ -48,3 +48,19 @@ export async function closePalletAction(palletId: string) {
   revalidatePath('/dashboard')
   return { success: true }
 }
+
+export async function deletePalletAction(palletId: string) {
+  const session = await getSession()
+  if (!session) return { error: 'Unauthorized' }
+
+  const pallet = await prisma.pallet.findUnique({
+    where: { id: palletId, departmentId: session.id },
+  })
+
+  if (!pallet) return { error: 'Bancale non trovato' }
+
+  await prisma.pallet.delete({ where: { id: palletId } })
+
+  revalidatePath('/dashboard')
+  return { success: true }
+}
