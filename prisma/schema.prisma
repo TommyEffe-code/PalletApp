@@ -17,6 +17,7 @@ model Department {
 model Pallet {
   id            String         @id @default(uuid())
   name          String
+  section       String?        // Optional sub-category within a department (e.g. "Freschi", "Surgelati")
   status        String         @default("OPEN") // OPEN, CLOSED
   createdAt     DateTime       @default(now())
   departmentId  String

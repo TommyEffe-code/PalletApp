@@ -12,6 +12,7 @@ export async function createPalletAction(formData: FormData) {
   }
 
   const name = formData.get('name') as string
+  const section = (formData.get('section') as string | null)?.trim() || null
 
   if (!name || name.trim() === '') {
     return { error: 'Pallet name is required' }
@@ -20,6 +21,7 @@ export async function createPalletAction(formData: FormData) {
   const pallet = await prisma.pallet.create({
     data: {
       name: name.trim(),
+      section,
       departmentId: session.id,
     },
   })
@@ -47,6 +49,20 @@ export async function closePalletAction(palletId: string) {
   revalidatePath(`/dashboard/pallets/${palletId}`)
   revalidatePath('/dashboard')
   return { success: true }
+}
+
+export async function getDepartmentSectionsAction() {
+  const session = await getSession()
+  if (!session) return []
+
+  const rows = await prisma.pallet.findMany({
+    where: { departmentId: session.id, section: { not: null } },
+    select: { section: true },
+    distinct: ['section'],
+    orderBy: { section: 'asc' },
+  })
+
+  return rows.map(r => r.section as string)
 }
 
 export async function deletePalletAction(palletId: string) {
